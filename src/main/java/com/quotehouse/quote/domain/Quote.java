@@ -1,5 +1,8 @@
 package com.quotehouse.quote.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,7 +11,13 @@ public class Quote {
 	@Id
 	private String id;
 	private String author;
+//	@NotEmpty(message = "Please add a quote")
 	private String quote;
+	private Set<String> tags;
+
+	public Quote() {
+		this.tags = new HashSet<>();
+	}
 
 	public String getId() {
 		return id;
@@ -34,9 +43,17 @@ public class Quote {
 		this.quote = quote;
 	}
 
+	public Set<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(Set<String> tags) {
+		this.tags = tags;
+	}
+
 	@Override
 	public String toString() {
-		return "Quote [author=" + author + ", quote=" + quote + "]";
+		return "Quote [id=" + id + ", author=" + author + ", quote=" + quote + ", tags=" + tags + "]";
 	}
 
 }

@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +25,7 @@ public class QuoteController {
 	private QuoteService quoteService;
 	
 	@PostMapping("/quote")
-	public Map<String, Quote> addQuote(@RequestBody Quote quote) {
+	public Map<String, Quote> addQuote(@RequestBody @Valid Quote quote) {
 		Map<String, Quote> quoteMap = new HashMap<>();
 		quoteMap.put("quote", quoteService.addQuote(quote));
 		
