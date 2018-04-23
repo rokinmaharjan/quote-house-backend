@@ -19,6 +19,12 @@ public class Quote {
 		this.tags = new HashSet<>();
 	}
 
+	public Quote(QuoteBuilder quoteBuilder) {
+		this.author = quoteBuilder.author;
+		this.quote = quoteBuilder.quote;
+		this.tags = quoteBuilder.tags;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -49,6 +55,31 @@ public class Quote {
 
 	public void setTags(Set<String> tags) {
 		this.tags = tags;
+	}
+	
+	public static class QuoteBuilder {
+		private String author;
+		private String quote;
+		private Set<String> tags;
+		
+		public QuoteBuilder author(String author) {
+			this.author = author;
+			return this;
+		}
+		
+		public QuoteBuilder quote(String quote) {
+			this.quote = quote;
+			return this;
+		}
+		
+		public QuoteBuilder tags(Set<String> tags) {
+			this.tags = tags;
+			return this;
+		}
+		
+		public Quote build() {
+			return new Quote(this);
+		}
 	}
 
 	@Override

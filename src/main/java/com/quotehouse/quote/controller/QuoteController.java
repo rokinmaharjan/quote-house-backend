@@ -1,5 +1,6 @@
 package com.quotehouse.quote.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,5 +42,13 @@ public class QuoteController {
 		return quotesMap;
 	}
 	
+	@PostMapping("/import/goodreads")
+	public List<Quote> importQuotesFromGoodreads(@RequestParam(defaultValue = "1") Integer startPage, @RequestParam(defaultValue = "2") Integer endPage) {
+		try {
+			return quoteService.importQuotesFromGoodreads(startPage, endPage);
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
+	}
 
 }
