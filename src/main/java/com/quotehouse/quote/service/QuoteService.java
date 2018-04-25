@@ -2,12 +2,15 @@ package com.quotehouse.quote.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -36,15 +39,20 @@ public class QuoteService {
 		return quote;
 	}
 	
-	public List<Quote> getAllQuotesWithPaging(Integer page, Integer size) {
+	public Map<String, Object> getAllQuotesWithPaging(Integer page, Integer size) {
 		long startTime = System.currentTimeMillis();
 		
-		List<Quote> quotes = quoteRepository.findAll(PageRequest.of(page, size)).getContent();
+		Page<Quote> quotes = quoteRepository.findAll(PageRequest.of(page, size));
 		
 		long endTime = System.currentTimeMillis();
 		logger.info("Time taken to fetch all quotes: {} ms", (endTime - startTime));
 		
-		return quotes;
+		Map<String, Object> quotesObject = new HashMap<>();
+		quotesObject.put("quotes", quotes.getContent());
+		quotesObject.put("pages", quotes.getTotalPages());
+		quotesObject.put("totalQuotes", quotes.getTotalElements());
+		
+		return quotesObject;
 		
 	}
 

@@ -35,13 +35,10 @@ public class QuoteController {
 	}
 
 	@GetMapping()
-	public Map<String, List<Quote>> getAllQuotesWithPaging(
+	public Map<String, Object> getAllQuotesWithPaging(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "size", defaultValue = "25") Integer size) {
-		Map<String, List<Quote>> quotesMap = new HashMap<>();
-		quotesMap.put("quotes", quoteService.getAllQuotesWithPaging(page, size));
-
-		return quotesMap;
+		return quoteService.getAllQuotesWithPaging(page, size);
 	}
 
 	@PostMapping("/import/goodreads")
